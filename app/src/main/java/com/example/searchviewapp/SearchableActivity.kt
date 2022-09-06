@@ -7,6 +7,7 @@ import android.os.PersistableBundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.searchviewapp.adapter.CardAdapter
 import com.example.searchviewapp.databinding.ActivityMainBinding
 import com.example.searchviewapp.databinding.SearchBinding
 import com.example.searchviewapp.network.RiotApi
@@ -19,7 +20,6 @@ class SearchableActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //val viewModel: OverviewViewModel by viewModels()
 
         val binding: SearchBinding = DataBindingUtil.setContentView(
             this, R.layout.search)
@@ -27,6 +27,8 @@ class SearchableActivity: AppCompatActivity() {
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
+
+        binding.matchHistoryRecyclerView.adapter = CardAdapter()
         
 
         if (Intent.ACTION_SEARCH == intent.action) {
