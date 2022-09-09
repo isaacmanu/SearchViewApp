@@ -17,17 +17,27 @@ import retrofit2.http.Path
 private const val BASE_URL =
     "https://euw1.api.riotgames.com"
 
+private const val BASE_URL_EUROPE = "https://europe.api.riotgames.com"
+
 //Development API key, needs to be regenerated every 24 hours and is not to be used in a live product
-private const val API_KEY = "RGAPI-f8d864a2-cae1-4e55-bf12-34fb70aed51a"
+private const val API_KEY = "RGAPI-96f47c83-205f-4692-b6e3-17056f3bb690"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
 
+//Retrofit instance for euw1 endpoint
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
     .build()
+
+//Retrofit instance for europe endpoint
+private val retrofitEurope = Retrofit.Builder()
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .baseUrl(BASE_URL_EUROPE)
+    .build()
+
 
 interface RiotApiService {
     @GET("/lol/summoner/v4/summoners/by-name/{query}?api_key=$API_KEY")
@@ -37,14 +47,21 @@ interface RiotApiService {
     suspend fun getRankedData(@Path("summonerId") summonerId: String): Response<List<RankedData>>
 
     @GET("/tft/match/v1/matches/by-puuid/{puuid}/ids?api_key=$API_KEY")
-    suspend fun getMatchHistory(@Path("puuid") puuId: String) :Response<List<MatchHistory>>
+    suspend fun getMatchHistory(@Path("puuid") puuId: String) :Response<List<String>>
 
     @GET("/tft/match/v1/matches/{matchId}?api_key=$API_KEY")
     suspend fun getMatchData(@Path("matchId") matchId: String): Response<MatchData>
 }
 
+
 object RiotApi {
     val retrofitService: RiotApiService by lazy {
         retrofit.create(RiotApiService::class.java)
+    }
+}
+
+object RiotApiEuropeRouting {
+    val retrofitService: RiotApiService by lazy {
+        retrofitEurope.create(RiotApiService::class.java)
     }
 }

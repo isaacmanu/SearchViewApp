@@ -13,7 +13,8 @@ class CardAdapter: ListAdapter<MatchData, CardAdapter.CardViewHolder>(DiffCallba
 
     class CardViewHolder(private var binding: CardViewBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(matchData: MatchData) {
-        binding.matchData = matchData
+            binding.matchData = matchData
+
             binding.executePendingBindings()
         }
 
@@ -21,11 +22,11 @@ class CardAdapter: ListAdapter<MatchData, CardAdapter.CardViewHolder>(DiffCallba
 
     companion object DiffCallback : DiffUtil.ItemCallback<MatchData>() {
         override fun areItemsTheSame(oldItem: MatchData, newItem: MatchData): Boolean {
-            TODO("Not yet implemented")
+            return oldItem.metadata.match_id == newItem.metadata.match_id
         }
 
         override fun areContentsTheSame(oldItem: MatchData, newItem: MatchData): Boolean {
-            TODO("Not yet implemented")
+            return oldItem == newItem
         }
 
     }

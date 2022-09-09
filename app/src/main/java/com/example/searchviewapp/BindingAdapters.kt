@@ -13,8 +13,8 @@ import com.example.searchviewapp.overview.RiotApiStatus
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<MatchData>?) {
-    val adapter = recyclerView.adapter as CardAdapter?
-    adapter?.submitList(data)
+    val adapter = recyclerView.adapter as CardAdapter
+    adapter.submitList(data)
 
 }
 
