@@ -17,11 +17,13 @@ import retrofit2.http.Path
 private const val BASE_URL =
     "https://euw1.api.riotgames.com"
 
+//Routing for Europe
 private const val BASE_URL_EUROPE = "https://europe.api.riotgames.com"
 
 //Development API key, needs to be regenerated every 24 hours and is not to be used in a live product
-private const val API_KEY = "RGAPI-96f47c83-205f-4692-b6e3-17056f3bb690"
+private const val API_KEY = "RGAPI-c794849c-3ab1-4058-92d1-40e758a02d2e"
 
+//Moshi object to handle JSON response
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
@@ -38,7 +40,11 @@ private val retrofitEurope = Retrofit.Builder()
     .baseUrl(BASE_URL_EUROPE)
     .build()
 
-
+/*
+Using the username given by the user we use Retrofit to send GET requests to different endpoints.
+getSummonerData is the only request that requires user data, the rest use values taken from
+previous requests
+*/
 interface RiotApiService {
     @GET("/lol/summoner/v4/summoners/by-name/{query}?api_key=$API_KEY")
     suspend fun getSummonerData(@Path("query") query: String): Response<SummonerData>
@@ -53,7 +59,7 @@ interface RiotApiService {
     suspend fun getMatchData(@Path("matchId") matchId: String): Response<MatchData>
 }
 
-
+//Public objects which extend the api service to the rest of the app (namely the viewmodel)
 object RiotApi {
     val retrofitService: RiotApiService by lazy {
         retrofit.create(RiotApiService::class.java)

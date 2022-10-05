@@ -6,26 +6,28 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.searchviewapp.databinding.CardViewBinding
-import com.example.searchviewapp.network.model.MatchData
-
-class CardAdapter: ListAdapter<MatchData, CardAdapter.CardViewHolder>(DiffCallback) {
+import com.example.searchviewapp.network.model.RecyclerViewItem
+/*
+ListAdapter which takes a list of RecyclerViewItem
+ */
+class CardAdapter: ListAdapter<RecyclerViewItem, CardAdapter.CardViewHolder>(DiffCallback) {
 
 
     class CardViewHolder(private var binding: CardViewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(matchData: MatchData) {
-            binding.matchData = matchData
+        fun bind(recyclerViewItem: RecyclerViewItem) {
+            binding.recyclerViewItem = recyclerViewItem
 
             binding.executePendingBindings()
         }
 
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<MatchData>() {
-        override fun areItemsTheSame(oldItem: MatchData, newItem: MatchData): Boolean {
-            return oldItem.metadata.match_id == newItem.metadata.match_id
+    companion object DiffCallback : DiffUtil.ItemCallback<RecyclerViewItem>() {
+        override fun areItemsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
+            return oldItem.matchData.metadata.match_id == newItem.matchData.metadata.match_id
         }
 
-        override fun areContentsTheSame(oldItem: MatchData, newItem: MatchData): Boolean {
+        override fun areContentsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
             return oldItem == newItem
         }
 
@@ -36,8 +38,8 @@ class CardAdapter: ListAdapter<MatchData, CardAdapter.CardViewHolder>(DiffCallba
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        val matchData = getItem(position)
-        holder.bind(matchData)
+        val recyclerViewItem = getItem(position)
+        holder.bind(recyclerViewItem)
     }
 }
 

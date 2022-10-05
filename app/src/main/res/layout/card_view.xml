@@ -5,148 +5,65 @@
 
     <data>
         <variable
-            name="matchData"
-            type="com.example.searchviewapp.network.model.MatchData" />
+            name="recyclerViewItem"
+            type="com.example.searchviewapp.network.model.RecyclerViewItem" />
+        <variable
+            name="userData"
+            type="com.example.searchviewapp.network.model.RankedData" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="8dp"
+        app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
+        style="?attr/materialCardViewElevatedStyle">
 
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="2dp">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/text_view_placement"
+                android:id="@+id/queue_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{matchData.info.tft_game_type}"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                app:queueType="@{recyclerViewItem.matchData.info.tft_game_type}"
+                tools:text="Ranked"/>
+
+
+            <TextView
+                android:id="@+id/placement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:placement="@{recyclerViewItem}"
                 tools:text="Placement: 1st"/>
 
             <TextView
+                android:id="@+id/game_length"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/text_view_placement"
-                android:text="Test Test Test"/>
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:timeInSeconds="@{recyclerViewItem.matchData.info.game_length}"
+                tools:text="33:33"/>
 
-
-            <ImageView
-                android:id="@+id/drawable_first_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/text_view_placement"
-                tools:src="@drawable/afk1_tft_set7"/>
-
-            <ImageView
-                android:id="@+id/drawable_second_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/drawable_first_unit"
-                android:layout_below="@+id/text_view_placement"
-                tools:src="@drawable/afk1_tft_set7"/>
-
-            <ImageView
-                android:id="@+id/drawable_third_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/drawable_second_unit"
-                android:layout_below="@+id/text_view_placement"
-                tools:src="@drawable/afk1_tft_set7"/>
-
-            <ImageView
-                android:id="@+id/drawable_fourth_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/drawable_third_unit"
-                android:layout_below="@+id/text_view_placement"
-                tools:src="@drawable/afk1_tft_set7"/>
-
-            <ImageView
-                android:id="@+id/drawable_fifth_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/drawable_fourth_unit"
-                android:layout_below="@+id/text_view_placement"
-                tools:src="@drawable/afk1_tft_set7"/>
-
-            <ImageView
-                android:id="@+id/drawable_sixth_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/drawable_fifth_unit"
-                android:layout_below="@+id/text_view_placement"
-                tools:src="@drawable/afk1_tft_set7"/>
-
-            <ImageView
-                android:id="@+id/drawable_seventh_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/drawable_sixth_unit"
-                android:layout_below="@+id/text_view_placement"
-                tools:src="@drawable/afk1_tft_set7"/>
-
-            <ImageView
-                android:id="@+id/drawable_eighth_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/drawable_seventh_unit"
-                android:layout_below="@+id/text_view_placement"
-                tools:src="@drawable/afk1_tft_set7"/>
-
-            <ImageView
-                android:id="@+id/drawable_ninth_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/drawable_eighth_unit"
-                android:layout_below="@+id/text_view_placement"
-                tools:src="@drawable/afk1_tft_set7"/>
-
-            <TextView
-                android:id="@+id/text_view_augments"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/drawable_first_unit"
-                android:layout_alignStart="@+id/drawable_fifth_unit"
-                tools:text="Augments:" />
-
-            <ImageView
-                android:id="@+id/drawable_first_augment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:src="@drawable/afk1_tft_set7"
-                android:layout_below="@+id/drawable_first_unit"
-                android:layout_toEndOf="@+id/text_view_augments"
-                />
-
-            <ImageView
-                android:id="@+id/drawable_second_augment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:src="@drawable/afk1_tft_set7"
-                android:layout_below="@+id/drawable_first_unit"
-                android:layout_toEndOf="@+id/drawable_first_augment"
-                />
-
-            <ImageView
-                android:id="@+id/drawable_third_augment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:src="@drawable/afk1_tft_set7"
-                android:layout_below="@+id/drawable_first_unit"
-                android:layout_toEndOf="@+id/drawable_second_augment"
-                />
+        </LinearLayout>
 
 
 
 
 
-        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 
-    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
 </layout>

@@ -33,31 +33,16 @@ class MainActivity : AppCompatActivity() {
 
         //Setup for searchview
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = findViewById<SearchView>(R.id.searchView)
+        val searchView =  binding.searchView    //findViewById<SearchView>(R.id.searchView)
         val searchableInfo = searchManager.getSearchableInfo(componentName)
         searchView.setSearchableInfo(searchableInfo)
 
+        //Brings the searchview into focus on app start and on navigation back to activity
+        binding.searchView.requestFocus()
+
 
 
 
 
     }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-
 }
