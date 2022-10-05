@@ -21,7 +21,7 @@ private const val BASE_URL =
 private const val BASE_URL_EUROPE = "https://europe.api.riotgames.com"
 
 //Development API key, needs to be regenerated every 24 hours and is not to be used in a live product
-private const val API_KEY = "RGAPI-c794849c-3ab1-4058-92d1-40e758a02d2e"
+private const val API_KEY = "RGAPI-cdd299b7-fdfb-4968-866d-079adb862edd"
 
 //Moshi object to handle JSON response
 private val moshi = Moshi.Builder()
