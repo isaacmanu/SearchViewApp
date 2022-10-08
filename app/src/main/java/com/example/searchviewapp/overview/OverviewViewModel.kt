@@ -151,7 +151,7 @@ class OverviewViewModel : ViewModel() {
     }
 
     private suspend fun getMatchHistory(puuId: String) {
-            val listResultMatchHistory = RiotApiEuropeRouting.retrofitService.getMatchHistory(puuId)
+            val listResultMatchHistory = RiotApi.retrofitService.getMatchHistory(puuId)
             _matchHistory.value = listResultMatchHistory.body()
 
     }
@@ -159,7 +159,7 @@ class OverviewViewModel : ViewModel() {
     private suspend fun getMatchData(matchIdList: List<String>?) {
         val listResult = mutableListOf<MatchData>()
         matchIdList!!.forEach {
-            listResult.add(RiotApiEuropeRouting.retrofitService.getMatchData(it).body()!!)
+            listResult.add(RiotApi.retrofitService.getMatchData(it).body()!!)
         }
         _matchData.value = listResult
 

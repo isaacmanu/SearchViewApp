@@ -12,16 +12,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-
-//Routing for EUW
-private const val BASE_URL =
-    "https://euw1.api.riotgames.com"
-
-//Routing for Europe
-private const val BASE_URL_EUROPE = "https://europe.api.riotgames.com"
-
-//Development API key, needs to be regenerated every 24 hours and is not to be used in a live product
-private const val API_KEY = "RGAPI-c794849c-3ab1-4058-92d1-40e758a02d2e"
+//Backend server hosted on deta (https://www.deta.sh/)
+private const val BASE_URL = "https://4u2rwv.deta.dev/"
 
 //Moshi object to handle JSON response
 private val moshi = Moshi.Builder()
@@ -34,28 +26,22 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-//Retrofit instance for europe endpoint
-private val retrofitEurope = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl(BASE_URL_EUROPE)
-    .build()
-
 /*
 Using the username given by the user we use Retrofit to send GET requests to different endpoints.
 getSummonerData is the only request that requires user data, the rest use values taken from
 previous requests
 */
 interface RiotApiService {
-    @GET("/lol/summoner/v4/summoners/by-name/{query}?api_key=$API_KEY")
+    @GET("/get-user-data/{query}")
     suspend fun getSummonerData(@Path("query") query: String): Response<SummonerData>
 
-    @GET("/tft/league/v1/entries/by-summoner/{summonerId}?api_key=$API_KEY")
+    @GET("/get-ranked-data/{summonerId}")
     suspend fun getRankedData(@Path("summonerId") summonerId: String): Response<List<RankedData>>
 
-    @GET("/tft/match/v1/matches/by-puuid/{puuid}/ids?api_key=$API_KEY")
+    @GET("/get-match-history/{puuid}")
     suspend fun getMatchHistory(@Path("puuid") puuId: String) :Response<List<String>>
 
-    @GET("/tft/match/v1/matches/{matchId}?api_key=$API_KEY")
+    @GET("/get-match-data/{matchId}")
     suspend fun getMatchData(@Path("matchId") matchId: String): Response<MatchData>
 }
 
@@ -63,11 +49,5 @@ interface RiotApiService {
 object RiotApi {
     val retrofitService: RiotApiService by lazy {
         retrofit.create(RiotApiService::class.java)
-    }
-}
-
-object RiotApiEuropeRouting {
-    val retrofitService: RiotApiService by lazy {
-        retrofitEurope.create(RiotApiService::class.java)
     }
 }
