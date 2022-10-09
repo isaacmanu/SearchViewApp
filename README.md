@@ -19,7 +19,11 @@ The app itself is written entirely in Kotlin targeting Android 12 API level 32 a
 
 - [Moshi](https://github.com/square/moshi) to parse JSON responses into Kotlin objects.
 
-- Data Binding to bind UI components to LiveData sources.
+- [List Adapter](https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter)
+
+- [Live Data](https://developer.android.com/topic/libraries/architecture/livedata)
+
+- Data Binding to bind UI components to Live Data sources.
 
 - Coroutines to launch network requests off of the main thread.
 
