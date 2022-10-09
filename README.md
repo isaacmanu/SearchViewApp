@@ -25,7 +25,7 @@ The app itself is written entirely in Kotlin targeting Android 12 API level 32 a
 
 - [Data Binding](https://developer.android.com/topic/libraries/data-binding) to bind UI components to Live Data sources.
 
-- [Coroutines](https://developer.android.com/kotlin/coroutines) to launch network requests off of the main thread.
+- [Coroutines](https://developer.android.com/kotlin/coroutines) to launch network requests away from the main thread.
 
 - MVVM Architecture
 
