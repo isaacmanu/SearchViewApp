@@ -32,16 +32,16 @@ getSummonerData is the only request that requires user data, the rest use values
 previous requests
 */
 interface RiotApiService {
-    @GET("/get-user-data/{query}")
+    @GET("/euw/get-user-data/{query}")
     suspend fun getSummonerData(@Path("query") query: String): Response<SummonerData>
 
-    @GET("/get-ranked-data/{summonerId}")
+    @GET("/euw/get-ranked-data/{summonerId}")
     suspend fun getRankedData(@Path("summonerId") summonerId: String): Response<List<RankedData>>
 
-    @GET("/get-match-history/{puuid}")
+    @GET("/euw/get-match-history/{puuid}")
     suspend fun getMatchHistory(@Path("puuid") puuId: String) :Response<List<String>>
 
-    @GET("/get-match-data/{matchId}")
+    @GET("/euw/get-match-data/{matchId}")
     suspend fun getMatchData(@Path("matchId") matchId: String): Response<MatchData>
 }
 
