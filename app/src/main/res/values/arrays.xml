@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="simple_items">
+        <item>EUW</item>
+        <item>NA</item>
+        <item>KR</item>
+        <item>OCE</item>
+    </array>
+</resources>

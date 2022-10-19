@@ -20,24 +20,9 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true">
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:title="@{viewModel.userData.name}"
-                    tools:title="User Name" />
-
-            </com.google.android.material.appbar.AppBarLayout>
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="?android:actionBarSize"
                 android:layout_marginBottom="16dp"
                 tools:context=".FirstFragment">
 
@@ -126,4 +111,3 @@
     </LinearLayout>
 
 </layout>
-
