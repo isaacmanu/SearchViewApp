@@ -6,10 +6,10 @@
     <data>
         <variable
             name="recyclerViewItem"
-            type="com.example.searchviewapp.network.model.RecyclerViewItem" />
+            type="com.isaacmanu.tftstatsapp.network.model.RecyclerViewItem" />
         <variable
             name="userData"
-            type="com.example.searchviewapp.network.model.RankedData" />
+            type="com.isaacmanu.tftstatsapp.network.model.RankedData" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
