@@ -18,6 +18,7 @@ enum class RiotApiStatus { LOADING, ERROR, DONE }
 
 class OverviewViewModel : ViewModel() {
 
+
     //Repository instance to make network requests
     private val searchResultRepository = SearchResultRepository()
 

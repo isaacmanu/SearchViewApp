@@ -30,5 +30,4 @@ class SearchResultRepository {
         }
         return listResult
     }
-
 }
