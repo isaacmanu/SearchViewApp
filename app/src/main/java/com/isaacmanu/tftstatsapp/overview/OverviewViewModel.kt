@@ -10,12 +10,16 @@ import com.isaacmanu.tftstatsapp.network.model.MatchData
 import com.isaacmanu.tftstatsapp.network.model.RankedData
 import com.isaacmanu.tftstatsapp.network.model.RecyclerViewItem
 import com.isaacmanu.tftstatsapp.network.model.SummonerData
+import com.isaacmanu.tftstatsapp.repository.SearchResultRepository
 import kotlinx.coroutines.launch
 
 
 enum class RiotApiStatus { LOADING, ERROR, DONE }
 
 class OverviewViewModel : ViewModel() {
+
+    //Repository instance to make network requests
+    private val searchResultRepository = SearchResultRepository()
 
     /*
     Private and public LiveData values for all items used in SearchableActivity.
@@ -64,22 +68,16 @@ class OverviewViewModel : ViewModel() {
 
     }
 
-
         viewModelScope.launch {
             _status.value = RiotApiStatus.LOADING
 
-
             /*
-            Retrieve summoner data via RiotApiService and store it in _userData.
-            Returned value is in HTTP Response format, currently however only the message body
-            is used.
+            Retrieve summoner data via searchResultRepository and store it in _userData.
 
             Try-Catch blocks are used in case of network errors or unexpected behaviour
             */
             try {
-                val listResult = serverRegion.retrofitService.getSummonerData(query)
-                val body = listResult.body()
-                _userData.value = body
+                _userData.value = searchResultRepository.getUserData(query, serverRegion)
 
             } catch (e: Exception) {
                _status.value = RiotApiStatus.ERROR
@@ -94,7 +92,7 @@ class OverviewViewModel : ViewModel() {
             try {
                 val summonerId = _userData.value?.id
                 if (summonerId != null) {
-                    getRankedData(summonerId, serverRegion)
+                    _rankedData.value = searchResultRepository.getRankedData(summonerId, serverRegion)
                 }
             } catch (e: Exception) {
                 _status.value = RiotApiStatus.LOADING
@@ -102,13 +100,15 @@ class OverviewViewModel : ViewModel() {
 
             }
 
-            // Retrieve match history from Riot Api via our retrofit instance
-            // and store said match history in _matchHistory
-            //This will return a list of 10 unique match IDs
+            /*
+            Retrieve match history from Riot Api via searchResultRepository
+            and store said match history in _matchHistory
+            This will return a list of 10 unique match IDs
+            */
             try {
                 val userPuuId = _userData.value?.puuid
                 if (userPuuId != null) {
-                    getMatchHistory(userPuuId, serverRegion)
+                    _matchHistory.value = searchResultRepository.getMatchHistory(userPuuId, serverRegion)
                 }
             } catch (e: Exception) {
                _status.value = RiotApiStatus.ERROR
@@ -118,7 +118,7 @@ class OverviewViewModel : ViewModel() {
             //Retrieve match data for each unique match ID
             try {
                 val listOfMatchIds = _matchHistory.value
-                getMatchData(listOfMatchIds, serverRegion)
+                _matchData.value = searchResultRepository.getMatchData(listOfMatchIds, serverRegion)
             } catch (e: Exception) {
                 _status.value = RiotApiStatus.ERROR
                 _matchData.value = null
@@ -158,30 +158,6 @@ class OverviewViewModel : ViewModel() {
         _matchHistory.value = listOf()
         _matchData.value = null
         _recyclerItem.value = listOf()
-    }
-
-    /*
-    Suspend functions to be called inside the coroutine
-     */
-    private suspend fun getRankedData(summonerId: String, serverRegion: ApiInstance) {
-            val listResultRankedData = serverRegion.retrofitService.getRankedData(summonerId)
-            val rankedDataBody = listResultRankedData.body()
-            _rankedData.value = rankedDataBody!![0]
-    }
-
-    private suspend fun getMatchHistory(puuId: String, serverRegion: ApiInstance) {
-            val listResultMatchHistory = serverRegion.retrofitService.getMatchHistory(puuId)
-            _matchHistory.value = listResultMatchHistory.body()
-
-    }
-
-    private suspend fun getMatchData(matchIdList: List<String>?, serverRegion: ApiInstance) {
-        val listResult = mutableListOf<MatchData>()
-        matchIdList!!.forEach {
-            listResult.add(serverRegion.retrofitService.getMatchData(it).body()!!)
-        }
-        _matchData.value = listResult
-
     }
 
 
