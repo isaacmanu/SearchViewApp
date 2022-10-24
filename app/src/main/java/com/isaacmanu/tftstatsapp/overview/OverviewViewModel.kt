@@ -18,6 +18,8 @@ enum class RiotApiStatus { LOADING, ERROR, DONE }
 
 class OverviewViewModel : ViewModel() {
 
+
+    //Repository instance to make network requests
     private val searchResultRepository = SearchResultRepository()
 
     /*
@@ -67,15 +69,11 @@ class OverviewViewModel : ViewModel() {
 
     }
 
-
         viewModelScope.launch {
             _status.value = RiotApiStatus.LOADING
 
-
             /*
-            Retrieve summoner data via RiotApiService and store it in _userData.
-            Returned value is in HTTP Response format, currently however only the message body
-            is used.
+            Retrieve summoner data via searchResultRepository and store it in _userData.
 
             Try-Catch blocks are used in case of network errors or unexpected behaviour
             */
@@ -103,9 +101,11 @@ class OverviewViewModel : ViewModel() {
 
             }
 
-            // Retrieve match history from Riot Api via our retrofit instance
-            // and store said match history in _matchHistory
-            //This will return a list of 10 unique match IDs
+            /*
+            Retrieve match history from Riot Api via searchResultRepository
+            and store said match history in _matchHistory
+            This will return a list of 10 unique match IDs
+            */
             try {
                 val userPuuId = _userData.value?.puuid
                 if (userPuuId != null) {
